@@ -24,6 +24,9 @@ public class BinaryNode<T> {
         return this;
     }
 
+    public int height() { return this.height; }
+
+
 //    public BinaryNode<T> findMin (BinaryNode<T> curNode){
 //
 //    }

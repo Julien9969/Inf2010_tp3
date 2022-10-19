@@ -4,37 +4,6 @@ public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
         this.root = add(value, this.root);
     }
 
-    protected BinaryNode<T> add(T value, BinaryNode<T> curNode) {
-        //TODO
-        if( curNode == null)
-            return new AvlNode<T>( value, null, null);
-        int compareResult = value.compareTo( curNode.value);
-        if( compareResult< 0 )
-        {
-            curNode.left= insert( value, curNode.left);
-            if( height( curNode.left) -height( curNode.right) == 2 )
-                if( value.compareTo( curNode.left.value) < 0 )
-                    curNode = rotateWithLeftChild( curNode ); // premier cas de figure
-                else
-                    curNode = doubleWithLeftChild( curNode ); // second cas de figure
-        }
-        elseif( compareResult> 0 )
-        {
-            curNode.right= insert( value, curNode.right);
-            if( height( curNode.right) -height( curNode.left) == 2 )
-                if( value.compareTo( curNode.right.value) > 0 )
-                    curNode = rotateWithRightChild( curNode ); // premier cas de figure
-                else
-                    curNode = doubleWithRightChild( curNode ); // second cas de figure
-        }
-        else
-        ; // Pas de doublons
-// Mettre à jour les hauteurs en remontant
-        curNode.height= Math.max( height( curNode.left), height( curNode.right) ) + 1;
-        return curNode;
-
-    }
-
     @Override
     public void remove(T value) {
         this.root = remove(value, this.root);
@@ -46,4 +15,86 @@ public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
     }
 
    //TODO Ajouter les méthodes manquantes
+    protected BinaryNode<T> add(T x, BinaryNode<T> t)
+    {
+        if (t == null)
+            return new BinaryNode<T>(x);
+
+        int compareResult = x.compareTo(t.value);
+
+        if ( compareResult < 0)
+            t.left = add( x, t.left);
+        else if ( compareResult > 0)
+            t.right = add( x, t.right);
+
+        return balance(t);
+    }
+
+    private BinaryNode balance( BinaryNode<T> t)
+    {
+        if (t == null)
+            return t;
+
+        if ( t.left.height() - t.right.height() > 1)
+        {
+            if ( t.left.left.height() - t.left.right.height() >= 0)
+                t = rotateWithLeftChild(t);
+            else
+                t = doubleWithLeftChild(t);
+        }
+        else if ( t.left.height() - t.right.height() < -1)
+        {
+            if ( t.left.left.height() - t.left.right.height() <= 0)
+                t = rotateWithRightChild(t);
+            else
+                t = doubleWithRightChild(t);
+        }
+
+        t.height = Math.max( t.left.height(), t.right.height()) + 1;
+        return t;
+    }
+
+    private BinaryNode<T> rotateWithLeftChild( BinaryNode<T> k2)
+    {
+        BinaryNode<T> k1 = k2.left;
+
+        k2.left = k1.right;
+        k1.right = k2;
+
+        k2.height = Math.max( k2.left.height(), k2.right.height()) + 1;
+        k1.height = Math.max( k1.left.height(), k2.height()) + 1;
+
+        return k1;
+    }
+
+    private BinaryNode<T> doubleWithLeftChild( BinaryNode<T> k3)
+    {
+        k3.left = rotateWithLeftChild(k3.left);
+        return rotateWithLeftChild(k3);
+    }
+
+    private BinaryNode<T> rotateWithRightChild( BinaryNode<T> k2)
+    {
+        BinaryNode<T> k1 = k2.right;
+
+        k2.right = k1.left;
+        k1.left = k2;
+
+
+        k1.height = Math.max( k2.right.height(), k1.height()) + 1;
+        k2.height = Math.max( k1.left.height(), k1.right.height()) + 1;
+
+        return k1;
+    }
+
+    private BinaryNode<T> doubleWithRightChild( BinaryNode<T> k1)
+    {
+        k1.left = rotateWithLeftChild(k1.right);
+        return rotateWithRightChild(k1);
+    }
+
+
+
+
+
 }

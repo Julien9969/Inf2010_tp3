@@ -19,5 +19,6 @@ class AVLTreeTester {
         System.out.println("Parcours préordre de AVL: "); avl.printPreOrder(); System.out.println("");
         System.out.println("Parcours en ordre de AVL: "); avl.printInOrder(); System.out.println("");
         System.out.println("Parcours par post ordre de AVL: "); avl.printPostOrder(); System.out.println("");
+
     }
 }
