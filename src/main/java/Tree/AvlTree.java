@@ -1,7 +1,9 @@
-public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
+package Tree;
+
+public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     @Override
     public void add(T value) {
-        this.root = add(value, this.root);
+        this.root = add(value, this.root, 0);
     }
 
     @Override
@@ -15,17 +17,17 @@ public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
     }
 
    //TODO Ajouter les méthodes manquantes
-    protected BinaryNode<T> add(T x, BinaryNode<T> t)
+    protected BinaryNode<T> add(T x, BinaryNode<T> t, int deep)
     {
         if (t == null)
-            return new BinaryNode<T>(x);
+            return new BinaryNode<T>(x, deep);
 
         int compareResult = x.compareTo(t.value);
 
         if ( compareResult < 0)
-            t.left = add( x, t.left);
+            t.left = add(x, t.left, deep+1);
         else if ( compareResult > 0)
-            t.right = add( x, t.right);
+            t.right = add(x, t.right, deep+1);
 
         return balance(t);
     }
@@ -35,22 +37,22 @@ public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
         if (t == null)
             return t;
 
-        if ( t.left.height() - t.right.height() > 1)
+        if ( t.left.height - t.right.height > 1)
         {
-            if ( t.left.left.height() - t.left.right.height() >= 0)
+            if ( t.left.left.height - t.left.right.height >= 0)
                 t = rotateWithLeftChild(t);
             else
                 t = doubleWithLeftChild(t);
         }
-        else if ( t.left.height() - t.right.height() < -1)
+        else if ( t.left.height - t.right.height < -1)
         {
-            if ( t.left.left.height() - t.left.right.height() <= 0)
+            if ( t.left.left.height - t.left.right.height <= 0)
                 t = rotateWithRightChild(t);
             else
                 t = doubleWithRightChild(t);
         }
 
-        t.height = Math.max( t.left.height(), t.right.height()) + 1;
+        t.height = Math.max( t.left.height, t.right.height) + 1;
         return t;
     }
 
@@ -61,8 +63,8 @@ public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
         k2.left = k1.right;
         k1.right = k2;
 
-        k2.height = Math.max( k2.left.height(), k2.right.height()) + 1;
-        k1.height = Math.max( k1.left.height(), k2.height()) + 1;
+        k2.height = Math.max( k2.left.height, k2.right.height) + 1;
+        k1.height = Math.max( k1.left.height, k2.height) + 1;
 
         return k1;
     }
@@ -81,20 +83,19 @@ public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T>{
         k1.left = k2;
 
 
-        k1.height = Math.max( k2.right.height(), k1.height()) + 1;
-        k2.height = Math.max( k1.left.height(), k1.right.height()) + 1;
+        k1.height = Math.max( k2.right.height, k1.height) + 1;
+        k2.height = Math.max( k1.left.height, k1.right.height) + 1;
 
         return k1;
     }
 
-    private BinaryNode<T> doubleWithRightChild( BinaryNode<T> k1)
+    private BinaryNode<T> doubleWithRightChild(BinaryNode<T> k1)
     {
         k1.left = rotateWithLeftChild(k1.right);
         return rotateWithRightChild(k1);
     }
 
-
-
-
+    @Override
+    public String type() { return "AVL"; }
 
 }
