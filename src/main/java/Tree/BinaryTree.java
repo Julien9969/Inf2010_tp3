@@ -34,8 +34,8 @@ public class BinaryTree<T> {
         {
             System.out.print(node.value);
             System.out.print(" -> ");
-            printPostOrder(node.left);
-            printPostOrder(node.right);
+            printPreOrder(node.left);
+            printPreOrder(node.right);
         }
     }
 
@@ -49,10 +49,10 @@ public class BinaryTree<T> {
 
         if (node != null)
         {
-            printPostOrder(node.left);
+            printInOrder(node.left);
             System.out.print(node.value);
             System.out.print(" -> ");
-            printPostOrder(node.right);
+            printInOrder(node.right);
         }
     }
 }

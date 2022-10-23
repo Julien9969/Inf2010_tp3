@@ -3,21 +3,22 @@ package Tree;
 public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> implements Tree<T> {
 
     public void add(T data) {
-        this.root = add(data, root, 0);
+        this.root = add(data, root);
     }
 
-    protected BinaryNode<T> add(T value, BinaryNode<T> curNode, int deep) {
+    protected BinaryNode<T> add(T value, BinaryNode<T> curNode) {
 
-        if ( curNode == null)
-            return new BinaryNode<T>(value, deep);
-        int compareResult = value.compareTo( curNode.value );
+        if (curNode == null)
+            return new BinaryNode<>(value, 0);
+        int compareResult = value.compareTo(curNode.value);
 
-        if (compareResult < 0)
-            curNode.left = add( value, curNode.left, deep+1 );
-        else if ( compareResult > 0)
-        curNode.right = add( value, curNode.right, deep+1 );
-        else
-            ;
+        if (compareResult < 0) {
+            curNode.left = add(value, curNode.left);
+        } else if ( compareResult > 0) {
+            curNode.right = add(value, curNode.right);
+        }
+
+        curNode.height = Math.max(curNode.height(curNode.left), curNode.height(curNode.right)) + 1;
         return curNode;
     }
 

@@ -5,7 +5,7 @@ public class BinaryNode<T> {
     public BinaryNode<T> left = null;    // Pointer to the node on the left which should contain a value below this.value
     public BinaryNode<T> right = null;   // Pointer to the node on the right which should contain a value above this.value
     public int height = 0;
-    public T value = null;
+    public T value;
 
     public BinaryNode(T value) {
         this.value = value;
@@ -23,7 +23,8 @@ public class BinaryNode<T> {
         return this;
     }
 
-//    public Tree.BinaryNode<T> findMin (Tree.BinaryNode<T> curNode){
-//
-//    }
+    public int height( BinaryNode<T> t) {
+        return t == null ? -1: t.height;
+    }
+
 }

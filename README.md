@@ -33,7 +33,7 @@ Un arbre AVL est un arbre binaire de recherche équilibré. Celui-ci oblige que 
 
 L'implémentation de ces algorithmes est disponible dans les diapositives **Cours05** et **Cours06** et dans le chapitre 4 du livre de Mark Allen Weiss.
 
-Pour la première partie, il vous est demandé de compléter les classes BinaryTree, BinarySearchTree et AvlTree.
+Pour la première partie, il vous est demandé de compléter les classes Tree.BinaryTree, Tree.BinarySearchTree et Tree.AvlTree.
 
 Il est possible de rouler le test AVLTreeTester pour afficher les parcours des arbres en préordre, en ordre et par niveau. Ce n'est que 2 tests case pour débuter, mais il est fortement encouragé d'en écrire plus pour vérifier le bon comportement de vos méthodes.
 

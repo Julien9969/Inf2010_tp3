@@ -2,46 +2,100 @@ import Tree.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public class TreeTest {
 
     public static void InitialTest(BinarySearchTree<Integer> tree) {
 
         Integer[] toInsert = {5,4,3,2,1,9,8,7,6};
-        for(int i = 0; i < toInsert.length; i++) {
-            tree.add(toInsert[i]);
-        }
+        for (Integer integer : toInsert)
+            tree.add(integer);
 
         PrintStream std = System.out;
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
         tree.printPreOrder();
-        System.out.println("");
+        System.out.println();
         tree.printInOrder();
-        System.out.println("");
+        System.out.println();
         tree.printPostOrder();
 
         System.setOut(std);
         String[] output = outContent.toString().split("\n");
 
-        System.out.print("Parcours préordre de " + tree.type() + ": ");
-        System.out.println(output[0].toString());
-        //assert(output[0].toString().equals("5 -> 1 -> 2 -> 3 -> 4 -> 6 -> 7 -> 8 -> 9 -> END"));
+        System.out.println("Arbre " + tree.type());
+        System.out.print("\tParcours préordre : ");
+        System.out.println(output[0]);
 
-        System.out.print("Parcours en ordre de " + tree.type() + ": ");
-        System.out.println(output[1].toString());
-        //assert(output[1].equals("1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 -> 9 -> END"));
+        System.out.print("\tParcours en ordre : ");
+        System.out.println(output[1]);
 
-        System.out.print("Parcours par post ordre " + tree.type() + ": ");
-        System.out.println(output[2].toString());
-        assert(output[2].equals("1 -> 2 -> 3 -> 4 -> 6 -> 7 -> 8 -> 9 -> 5 -> END"));
+        System.out.print("\tParcours par post ordre : ");
+        System.out.println(output[2]);
 
-        System.out.println("Element minimal : " + tree.findMin(tree.get_root()).value);
+        System.out.println("\tElement minimal : " + tree.findMin(tree.get_root()).value);
         assert(tree.findMin(tree.get_root()).value.equals(1));
 
-        System.out.println("Appartenance du 6 : " + tree.contains(6));
+        System.out.println("\tAppartenance du 6 : " + tree.contains(6));
         assert(tree.contains(6));
+    }
 
+    public static void InsertOrderTest(BinarySearchTree<Integer> tree, int n) {
+
+        Integer[] toInsert = new Integer[n];
+        Arrays.setAll(toInsert, i -> i + 1);
+
+        for (Integer integer : toInsert)
+            tree.add(integer);
+
+        PrintStream std = System.out;
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        tree.printPreOrder();
+        System.out.println();
+        tree.printInOrder();
+        System.out.println();
+        tree.printPostOrder();
+
+        System.setOut(std);
+        String[] output = outContent.toString().split("\n");
+
+        System.out.println("Arbre " + tree.type());
+        System.out.print("\tParcours préordre : ");
+        System.out.println(output[0]);
+
+        System.out.print("\tParcours en ordre : ");
+        System.out.println(output[1]);
+
+        System.out.print("\tParcours par post ordre : ");
+        System.out.println(output[2]);
+    }
+
+
+    public static void RemoveOrderTest(BinarySearchTree<Integer> tree, int n) {
+
+        System.out.println("Arbre " + tree.type());
+
+        Integer[] toInsert = new Integer[n];
+        Arrays.setAll(toInsert, i -> i + 1);
+
+        System.out.print("\tInsertion des élements : ");
+        for (Integer integer : toInsert)
+            tree.add(integer);
+
+        for (Integer integer : toInsert)
+            assert(tree.contains(integer));
+        System.out.println("OK");
+
+        System.out.print("\tRetrait des élements : ");
+        for (Integer integer : toInsert)
+            tree.remove(integer);
+
+        for (Integer integer : toInsert)
+            assert(!tree.contains(integer));
+        System.out.println("OK");
     }
 }
