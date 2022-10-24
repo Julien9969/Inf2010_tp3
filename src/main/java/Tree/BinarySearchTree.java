@@ -1,12 +1,23 @@
 package Tree;
 
+import Node.BinaryNode;
+
 public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> implements Tree<T> {
+
+    protected Counter count = new Counter();
+
+    public void reset(){
+        count.reset();
+        super.root = null;
+    }
 
     public void add(T data) {
         this.root = add(data, root);
     }
 
     protected BinaryNode<T> add(T value, BinaryNode<T> curNode) {
+
+        this.count.increments(Counter.op.INSERT);
 
         if (curNode == null)
             return new BinaryNode<>(value, 0);
@@ -18,7 +29,6 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> imp
             curNode.right = add(value, curNode.right);
         }
 
-        curNode.height = Math.max(curNode.height(curNode.left), curNode.height(curNode.right)) + 1;
         return curNode;
     }
 
@@ -29,10 +39,10 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> imp
     private boolean contains(T value, BinaryNode<T> curNode) {
 
         while (curNode != null){
+            count.increments(Counter.op.SEARCH);
             if (curNode.value == value){
                 return true;
-            }
-            else {
+            } else {
                 if (value.compareTo(curNode.value) < 0)
                     curNode = curNode.left;
                 else
@@ -79,6 +89,11 @@ public class BinarySearchTree<T extends Comparable<T>> extends BinaryTree<T> imp
 
         return findMin( curNode.left );
     }
+
+    public int getCounter(Counter.op type) {
+        return count.getCountSearch(type);
+    }
+
 
     public String type() { return "BST"; }
 }

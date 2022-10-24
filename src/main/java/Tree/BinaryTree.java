@@ -1,5 +1,7 @@
 package Tree;
 
+import Node.BinaryNode;
+
 public class BinaryTree<T> {
     protected BinaryNode<T> root = null;
 

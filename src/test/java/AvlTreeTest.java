@@ -20,5 +20,15 @@ class AVLTreeTester {
         TreeTest.RemoveOrderTest(new BinarySearchTree<Integer>(), 100);
         System.out.println();
 
+        TreeTest.CounterTest(new AvlTree<Integer>(), 100);
+        System.out.println();
+        TreeTest.CounterTest(new BinarySearchTree<Integer>(), 100);
+        System.out.println();
+
+        TreeTest.CounterMediumCase(new AvlTree<Integer>(), 1000, 10000);
+        System.out.println();
+        TreeTest.CounterMediumCase(new BinarySearchTree<Integer>(), 1000, 10000);
+        System.out.println();
+
     }
 }

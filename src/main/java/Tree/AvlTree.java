@@ -1,26 +1,18 @@
 package Tree;
 
+import Node.BinaryNode;
+
 public class AvlTree<T extends Comparable<T>> extends BinarySearchTree<T> {
 
     @Override
-    protected BinaryNode<T> add(T x, BinaryNode<T> t)
-    {
-        if (t == null)
-            return new BinaryNode<>(x);
-
-        int comparRes = x.compareTo(t.value);
-
-        if ( comparRes < 0)
-            t.left = add(x, t.left);
-        else if ( comparRes > 0)
-            t.right = add(x, t.right);
-
-        return balance(t);
+    protected BinaryNode<T> add(T x, BinaryNode<T> t) {
+        return balance(super.add(x, t));
     }
 
     @Override
     protected BinaryNode<T> remove( T x, BinaryNode<T> t)
     {
+
         if (t == null)
             return null;
 
